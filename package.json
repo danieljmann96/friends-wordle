@@ -1,0 +1,65 @@
+{
+  "name": "friends-wordle",
+  "version": "1.0.0",
+  "description": "Wordle based on friends",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --config config/webpack.dev.js",
+    "lint": "node_modules/.bin/eslint --cache --fix ./src",
+    "build": "webpack --config config/webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danieljmann96/friends-wordle.git"
+  },
+  "author": "Daniel Mann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danieljmann96/friends-wordle/issues"
+  },
+  "homepage": "https://github.com/danieljmann96/friends-wordle#readme",
+  "dependencies": {
+    "@fontsource/roboto": "^4.5.5",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
+    "@types/webpack": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-const-case": "^1.2.2",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.1",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.8",
+    "ts-unused-exports": "^8.0.0",
+    "typescript": "^4.6.3",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
+    "webpack-merge": "^5.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx}": "prettier --write"
+  }
+}

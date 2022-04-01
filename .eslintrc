@@ -1,0 +1,51 @@
+{
+    "env": {
+      "es6": true,
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/all",
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "plugin:react-hooks/recommended",
+      "plugin:jsx-a11y/strict",
+      "plugin:promise/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "@typescript-eslint",
+      "jsx-a11y",
+      "promise",
+      "const-case",
+      "react-hooks"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "@typescript-eslint/triple-slash-reference": "off",
+      "const-case/uppercase": "error",
+      "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+      "react/forbid-component-props": "off",
+      "react/jsx-max-depth": "off",
+      "react/jsx-no-literals": "off",
+      "react/jsx-no-bind": "off",
+      "react/no-multi-comp": "off",
+      "react/require-default-props": "off",
+      "react/jsx-props-no-spreading": "off",
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"]
+    }
+  }
