@@ -2,9 +2,10 @@ import React from 'react';
 import uniqid from 'uniqid';
 import { Grid } from '@mui/material';
 import Letter from './Letter';
+import { Letter as LetterType } from 'types';
 
 interface IProps {
-  word: string[];
+  word: LetterType[];
 }
 
 export default function WordRow({ word }: IProps): JSX.Element {

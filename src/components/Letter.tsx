@@ -1,8 +1,9 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { Letter as LetterType } from 'types';
 
 interface IProps {
-  letter: string;
+  letter: LetterType;
 }
 
 export default function Letter(props: IProps): JSX.Element {
@@ -21,7 +22,7 @@ export default function Letter(props: IProps): JSX.Element {
         component="span"
         sx={{ fontSize: '2.5rem', textAlign: 'center' }}
       >
-        {letter}
+        {letter.display}
       </Typography>
     </Box>
   );

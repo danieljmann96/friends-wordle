@@ -1,16 +1,20 @@
 import React, { createContext, useMemo, useState, useCallback } from 'react';
 import { DEFAULT_WORD, alphabet } from '../constants';
-import { ContextProviderProps } from 'types';
+import { ContextProviderProps, Letter } from 'types';
 
 interface WordContextState {
-  activeRow: string[];
+  activeRow: Letter[];
   inputLetter: (letter: string) => void;
   removeLetter: () => void;
-  usedRows: string[][];
+  usedRows: Letter[][];
   word: string;
 }
 
-const emptyRow = Array(DEFAULT_WORD.length).fill('');
+const emptyRow = Array<string>(DEFAULT_WORD.length)
+  .fill('')
+  .map<Letter>(x => {
+    return { display: x, status: 'unused' };
+  });
 
 export const WordContext = createContext<WordContextState>({
   activeRow: emptyRow,
@@ -23,17 +27,21 @@ export const WordContext = createContext<WordContextState>({
 export default function WordProvider({
   children
 }: ContextProviderProps): JSX.Element {
-  const [activeRow, setActiveRow] = useState<string[]>(emptyRow);
-  const [usedRows, setUsedRows] = useState<string[][]>([]);
+  const [activeRow, setActiveRow] = useState<Letter[]>(emptyRow);
+  const [usedRows, setUsedRows] = useState<Letter[][]>([]);
 
   const inputLetter = useCallback(
     (letter: string) => {
-      if (activeRow.includes('')) {
-        const indexToChange = activeRow.indexOf('');
+      const activeLetters = activeRow.map(x => x.display);
+      if (activeLetters.includes('')) {
+        const indexToChange = activeLetters.indexOf('');
         setActiveRow(rowState =>
           rowState
             .slice(0, indexToChange)
-            .concat(letter, rowState.slice(indexToChange + 1))
+            .concat(
+              { display: letter, status: 'unused' },
+              rowState.slice(indexToChange + 1)
+            )
         );
       }
     },
@@ -41,14 +49,18 @@ export default function WordProvider({
   );
 
   const removeLetter = useCallback(() => {
-    if (alphabet.includes(activeRow[0])) {
-      const indexToChange = activeRow.includes('')
-        ? activeRow.indexOf('') - 1
-        : activeRow.length - 1;
+    const activeLetters = activeRow.map(x => x.display);
+    if (alphabet.includes(activeLetters[0])) {
+      const indexToChange = activeLetters.includes('')
+        ? activeLetters.indexOf('') - 1
+        : activeLetters.length - 1;
       setActiveRow(rowState =>
         rowState
           .slice(0, indexToChange)
-          .concat('', rowState.slice(indexToChange + 1))
+          .concat(
+            { display: '', status: 'unused' },
+            rowState.slice(indexToChange + 1)
+          )
       );
     }
   }, [activeRow]);
