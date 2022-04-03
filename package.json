@@ -19,9 +19,13 @@
   },
   "homepage": "https://github.com/danieljmann96/friends-wordle#readme",
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.5",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.5.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.43",
