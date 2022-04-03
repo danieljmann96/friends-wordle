@@ -26,6 +26,7 @@
     "@mui/material": "^5.5.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-simple-keyboard": "^3.4.94",
     "uniqid": "^5.4.0"
   },
   "devDependencies": {

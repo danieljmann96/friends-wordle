@@ -1,0 +1,13 @@
+.hg-button {
+    background: black !important;
+    color: white !important;
+}
+
+.hg-button:hover {
+    background: grey !important;
+    color: white !important;
+}
+
+.hg-layout-default {
+    max-width: 700px !important;
+}

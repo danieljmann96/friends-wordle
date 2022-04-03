@@ -11,10 +11,10 @@ export default function Letter(props: IProps): JSX.Element {
     <Box
       component="span"
       sx={{
-        p: '2rem',
         backgroundColor: 'secondary.dark',
         gap: 2,
-        display: 'grid'
+        display: 'grid',
+        minHeight: 60
       }}
     >
       <Typography
