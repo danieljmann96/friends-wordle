@@ -1,20 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import uniqid from 'uniqid';
 import { Grid } from '@mui/material';
 import Letter from './Letter';
-import { WordContext } from '../providers/WordProvider';
 
 interface IProps {
-  rowIndex: number;
+  word: string[];
 }
 
-export default function WordRow({ rowIndex }: IProps): JSX.Element {
-  const { letters } = useContext(WordContext);
-
+export default function WordRow({ word }: IProps): JSX.Element {
   return (
     <>
-      {letters[rowIndex].map(letter => (
-        <Grid item key={uniqid()} xs={12 / letters[0].length}>
+      {word.map(letter => (
+        <Grid item key={uniqid()} xs={12 / word.length}>
           <Letter letter={letter} />
         </Grid>
       ))}

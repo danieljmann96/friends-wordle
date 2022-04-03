@@ -1,21 +1,17 @@
 import React, { createContext, useMemo, useState } from 'react';
-import { NUMBER_OF_GUESSES, DEFAULT_WORD } from '../constants';
+import { DEFAULT_WORD } from '../constants';
 import { ContextProviderProps } from 'types';
 
 interface WordContextState {
-  letters: string[][];
-  activeRow: number;
-  usedRows: number[];
+  activeRow: string[];
+  usedRows: string[][];
   word: string;
 }
 
-const initialLetters = Array(NUMBER_OF_GUESSES).fill(
-  Array(DEFAULT_WORD.length).fill('')
-);
+const emptyRow = Array(DEFAULT_WORD.length).fill('');
 
 export const WordContext = createContext<WordContextState>({
-  letters: initialLetters,
-  activeRow: 0,
+  activeRow: emptyRow,
   usedRows: [],
   word: ''
 });
@@ -23,13 +19,12 @@ export const WordContext = createContext<WordContextState>({
 export default function WordProvider({
   children
 }: ContextProviderProps): JSX.Element {
-  const [letters, setLetters] = useState<string[][]>(initialLetters);
-  const [activeRow, setActiveRow] = useState<number>(0);
-  const [usedRows, setUsedRows] = useState<number[]>([]);
+  const [activeRow, setActiveRow] = useState<string[]>(emptyRow);
+  const [usedRows, setUsedRows] = useState<string[][]>([]);
 
   const contextValue: WordContextState = useMemo(() => {
-    return { word: DEFAULT_WORD, letters, activeRow, usedRows };
-  }, [letters, activeRow, usedRows]);
+    return { word: DEFAULT_WORD, activeRow, usedRows };
+  }, [activeRow, usedRows]);
 
   return (
     <WordContext.Provider value={contextValue}>{children}</WordContext.Provider>
