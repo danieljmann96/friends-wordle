@@ -69,8 +69,9 @@ export default function WordProvider({
 
   const guessWord = useCallback(() => {
     if (!activeRow.map(x => x.display).includes('')) {
-      setActiveRow(rowState =>
-        rowState.map<Letter>((letter, i) => {
+      setUsedRows(usedState => [
+        ...usedState,
+        activeRow.map<Letter>((letter, i) => {
           return {
             display: letter.display,
             status:
@@ -81,7 +82,8 @@ export default function WordProvider({
                 : 'unused'
           };
         })
-      );
+      ]);
+      setActiveRow(emptyRow);
     }
   }, [activeRow]);
 

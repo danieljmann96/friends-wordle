@@ -12,7 +12,12 @@ export default function WordRow({ word }: IProps): JSX.Element {
   return (
     <>
       {word.map(letter => (
-        <Grid item key={uniqid()} xs={12 / word.length}>
+        <Grid
+          item
+          key={uniqid()}
+          sx={{ textAlign: 'center' }}
+          xs={12 / word.length}
+        >
           <Letter letter={letter} />
         </Grid>
       ))}

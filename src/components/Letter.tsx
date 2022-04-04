@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { Letter as LetterType } from 'types';
 
 const themeConverter = {
   unused: 'secondary.dark',
-  wrongPlace: 'warning.dark',
+  wrongPlace: 'warning.light',
   rightPlace: 'success.dark'
 };
 
@@ -15,13 +15,13 @@ interface IProps {
 export default function Letter(props: IProps): JSX.Element {
   const { letter } = props;
   return (
-    <Box
+    <Paper
       component="span"
       sx={{
         backgroundColor: themeConverter[letter.status],
-        gap: 2,
-        display: 'grid',
-        minHeight: 60
+        height: 60,
+        width: 100,
+        display: 'inline-block'
       }}
     >
       <Typography
@@ -30,6 +30,6 @@ export default function Letter(props: IProps): JSX.Element {
       >
         {letter.display}
       </Typography>
-    </Box>
+    </Paper>
   );
 }

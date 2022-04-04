@@ -1,6 +1,6 @@
 export const NUMBER_OF_GUESSES = 8;
 
-export const DEFAULT_WORD = 'CHANDLER';
+export const DEFAULT_WORD = 'MONICA';
 
 export const keyboardLayout = [
   'Q W E R T Y U I O P',

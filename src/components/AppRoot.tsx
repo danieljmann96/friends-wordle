@@ -44,7 +44,11 @@ export default function AppRoot(): JSX.Element {
         <Paper
           elevation={0}
           square
-          sx={{ width: '100%', margin: 0, height: '100vh', py: 10 }}
+          sx={{
+            width: '100%',
+            height: '100vh',
+            py: 10
+          }}
         >
           <LetterGrid />
         </Paper>
