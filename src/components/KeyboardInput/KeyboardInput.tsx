@@ -7,7 +7,7 @@ import 'react-simple-keyboard/build/css/index.css';
 import './index.css';
 
 export default function KeyboardInput(): JSX.Element {
-  const { inputLetter, removeLetter } = useContext(WordContext);
+  const { inputLetter, removeLetter, guessWord } = useContext(WordContext);
   const keyboardRef = useRef<KeyboardReactInterface | null>(null);
 
   const handleChange = (letter: string) => {
@@ -15,6 +15,8 @@ export default function KeyboardInput(): JSX.Element {
       inputLetter(letter);
     } else if (letter === '{bksp}') {
       removeLetter();
+    } else if (letter === '{enter}') {
+      guessWord();
     }
     if (keyboardRef.current) {
       keyboardRef.current.clearInput();

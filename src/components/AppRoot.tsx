@@ -19,7 +19,7 @@ export default function AppRoot(): JSX.Element {
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <WordProvider>
-        <AppBar position="static" sx={{ my: 0 }}>
+        <AppBar position="fixed" sx={{ my: 0 }}>
           <Toolbar>
             <IconButton
               color="inherit"

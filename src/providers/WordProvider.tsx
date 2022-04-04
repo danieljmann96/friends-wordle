@@ -4,6 +4,7 @@ import { ContextProviderProps, Letter } from 'types';
 
 interface WordContextState {
   activeRow: Letter[];
+  guessWord: () => void;
   inputLetter: (letter: string) => void;
   removeLetter: () => void;
   usedRows: Letter[][];
@@ -18,6 +19,7 @@ const emptyRow = Array<string>(DEFAULT_WORD.length)
 
 export const WordContext = createContext<WordContextState>({
   activeRow: emptyRow,
+  guessWord: () => null,
   inputLetter: () => null,
   removeLetter: () => null,
   usedRows: [],
@@ -65,15 +67,34 @@ export default function WordProvider({
     }
   }, [activeRow]);
 
+  const guessWord = useCallback(() => {
+    if (!activeRow.map(x => x.display).includes('')) {
+      setActiveRow(rowState =>
+        rowState.map<Letter>((letter, i) => {
+          return {
+            display: letter.display,
+            status:
+              DEFAULT_WORD[i] === letter.display
+                ? 'rightPlace'
+                : DEFAULT_WORD.includes(letter.display)
+                ? 'wrongPlace'
+                : 'unused'
+          };
+        })
+      );
+    }
+  }, [activeRow]);
+
   const contextValue: WordContextState = useMemo(() => {
     return {
       word: DEFAULT_WORD,
       activeRow,
       usedRows,
       inputLetter,
-      removeLetter
+      removeLetter,
+      guessWord
     };
-  }, [activeRow, usedRows, inputLetter, removeLetter]);
+  }, [activeRow, usedRows, inputLetter, removeLetter, guessWord]);
 
   return (
     <WordContext.Provider value={contextValue}>{children}</WordContext.Provider>

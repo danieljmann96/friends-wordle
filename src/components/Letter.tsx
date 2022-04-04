@@ -2,6 +2,12 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Letter as LetterType } from 'types';
 
+const themeConverter = {
+  unused: 'secondary.dark',
+  wrongPlace: 'warning.dark',
+  rightPlace: 'success.dark'
+};
+
 interface IProps {
   letter: LetterType;
 }
@@ -12,7 +18,7 @@ export default function Letter(props: IProps): JSX.Element {
     <Box
       component="span"
       sx={{
-        backgroundColor: 'secondary.dark',
+        backgroundColor: themeConverter[letter.status],
         gap: 2,
         display: 'grid',
         minHeight: 60
