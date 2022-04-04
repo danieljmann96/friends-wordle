@@ -1,10 +1,12 @@
 import React, { createContext, useMemo, useState, useCallback } from 'react';
-import { DEFAULT_WORD, alphabet } from '../constants';
-import { ContextProviderProps, Letter } from 'types';
+import { useSnackbar } from 'notistack';
+import { DEFAULT_WORD, alphabet, NUMBER_OF_GUESSES } from '../constants';
+import { ContextProviderProps, Letter, LetterStatus } from 'types';
 
 interface WordContextState {
   activeRow: Letter[];
   guessWord: () => void;
+  hasFinished: boolean;
   inputLetter: (letter: string) => void;
   removeLetter: () => void;
   usedRows: Letter[][];
@@ -20,6 +22,7 @@ const emptyRow = Array<string>(DEFAULT_WORD.length)
 export const WordContext = createContext<WordContextState>({
   activeRow: emptyRow,
   guessWord: () => null,
+  hasFinished: false,
   inputLetter: () => null,
   removeLetter: () => null,
   usedRows: [],
@@ -31,6 +34,8 @@ export default function WordProvider({
 }: ContextProviderProps): JSX.Element {
   const [activeRow, setActiveRow] = useState<Letter[]>(emptyRow);
   const [usedRows, setUsedRows] = useState<Letter[][]>([]);
+  const [hasFinished, setHasFinished] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const inputLetter = useCallback(
     (letter: string) => {
@@ -68,24 +73,48 @@ export default function WordProvider({
   }, [activeRow]);
 
   const guessWord = useCallback(() => {
-    if (!activeRow.map(x => x.display).includes('')) {
-      setUsedRows(usedState => [
-        ...usedState,
-        activeRow.map<Letter>((letter, i) => {
-          return {
-            display: letter.display,
-            status:
-              DEFAULT_WORD[i] === letter.display
-                ? 'rightPlace'
-                : DEFAULT_WORD.includes(letter.display)
-                ? 'wrongPlace'
-                : 'unused'
-          };
-        })
-      ]);
-      setActiveRow(emptyRow);
+    const letters = activeRow.map(x => x.display);
+    if (!letters.includes('')) {
+      const word = DEFAULT_WORD.split('');
+      const statuses: LetterStatus[] = Array(letters.length).fill('unused');
+      //go through correct letters
+      letters.forEach((letter, i) => {
+        if (word[i] === letter) {
+          statuses[i] = 'rightPlace';
+          word[i] = 'null';
+        }
+      });
+      //go through correct letters in wrong place
+      const wordLeft = word.filter(x => x !== 'null');
+      letters.forEach((letter, i) => {
+        if (statuses[i] === 'unused' && wordLeft.includes(letter)) {
+          statuses[i] = 'wrongPlace';
+          wordLeft[wordLeft.indexOf(letter)] = 'null';
+        }
+      });
+      const newRow = activeRow.map<Letter>((letter, i) => {
+        return { display: letter.display, status: statuses[i] };
+      });
+      const isFinished = usedRows.length === NUMBER_OF_GUESSES - 1;
+      const hasWon = letters.join('') === DEFAULT_WORD;
+      if (isFinished || hasWon) {
+        setHasFinished(true);
+        setActiveRow(newRow);
+        if (!hasWon) {
+          enqueueSnackbar("You didn't win! Better luck next time", {
+            variant: 'error'
+          });
+        } else {
+          enqueueSnackbar(`You won in ${usedRows.length + 1} guesses!`, {
+            variant: 'success'
+          });
+        }
+      } else {
+        setUsedRows(usedState => [...usedState, newRow]);
+        setActiveRow(emptyRow);
+      }
     }
-  }, [activeRow]);
+  }, [activeRow, enqueueSnackbar, usedRows.length]);
 
   const contextValue: WordContextState = useMemo(() => {
     return {
@@ -94,9 +123,10 @@ export default function WordProvider({
       usedRows,
       inputLetter,
       removeLetter,
-      guessWord
+      guessWord,
+      hasFinished
     };
-  }, [activeRow, usedRows, inputLetter, removeLetter, guessWord]);
+  }, [activeRow, usedRows, inputLetter, removeLetter, guessWord, hasFinished]);
 
   return (
     <WordContext.Provider value={contextValue}>{children}</WordContext.Provider>

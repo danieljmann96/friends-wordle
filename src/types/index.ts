@@ -4,5 +4,7 @@ export interface ContextProviderProps {
 
 export interface Letter {
   display: string;
-  status: 'unused' | 'wrongPlace' | 'rightPlace';
+  status: LetterStatus;
 }
+
+export type LetterStatus = 'unused' | 'wrongPlace' | 'rightPlace';

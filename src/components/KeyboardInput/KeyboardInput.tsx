@@ -7,7 +7,8 @@ import 'react-simple-keyboard/build/css/index.css';
 import './index.css';
 
 export default function KeyboardInput(): JSX.Element {
-  const { inputLetter, removeLetter, guessWord } = useContext(WordContext);
+  const { inputLetter, removeLetter, guessWord, hasFinished } =
+    useContext(WordContext);
   const keyboardRef = useRef<KeyboardReactInterface | null>(null);
 
   const handleChange = (letter: string) => {
@@ -28,14 +29,16 @@ export default function KeyboardInput(): JSX.Element {
       position="fixed"
       sx={{ top: 'auto', bottom: 0, alignItems: 'center' }}
     >
-      <Keyboard
-        disableButtonHold
-        keyboardRef={r => (keyboardRef.current = r)}
-        layout={{ default: keyboardLayout, shift: keyboardLayout }}
-        onKeyPress={handleChange}
-        physicalKeyboardHighlight
-        useButtonTag
-      />
+      {hasFinished ? null : (
+        <Keyboard
+          disableButtonHold
+          keyboardRef={r => (keyboardRef.current = r)}
+          layout={{ default: keyboardLayout, shift: keyboardLayout }}
+          onKeyPress={handleChange}
+          physicalKeyboardHighlight
+          useButtonTag
+        />
+      )}
     </AppBar>
   );
 }
