@@ -8,8 +8,8 @@ module.exports = merge(common, {
   devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html'
-      //favicon: png for favicon
+      template: './public/index.html',
+      favicon: './src/assets/favicon-32x32.png'
     })
   ]
 });

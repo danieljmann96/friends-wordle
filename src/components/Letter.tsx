@@ -3,9 +3,9 @@ import { Paper, Typography } from '@mui/material';
 import { Letter as LetterType } from 'types';
 
 const themeConverter = {
-  unused: 'secondary.dark',
-  wrongPlace: 'warning.light',
-  rightPlace: 'success.dark'
+  unused: 'secondary.main',
+  wrongPlace: 'warning.main',
+  rightPlace: 'success.main'
 };
 
 interface IProps {

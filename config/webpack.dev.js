@@ -19,8 +19,8 @@ const devConfig = {
   devtool: 'eval-source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html'
-      //favicon: png for favicon
+      template: './public/index.html',
+      favicon: './src/assets/favicon-32x32.png'
     }),
     new ESLintPlugin({
       extensions: ['ts', 'tsx'],
