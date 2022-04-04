@@ -1,6 +1,8 @@
 **_Still in Development_**
-#Friends Wordle
-##How to Run
+
+# Friends Wordle
+
+## How to Run
 
 ```
 npm install
