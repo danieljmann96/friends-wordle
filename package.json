@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack serve --config config/webpack.dev.js",
     "lint": "node_modules/.bin/eslint --cache --fix ./src",
-    "build": "webpack --config config/webpack.prod.js"
+    "build": "webpack --config config/webpack.prod.js",
+    "cyopen": "cypress open",
+    "cyrun": "cypress run"
   },
   "repository": {
     "type": "git",
@@ -37,11 +39,15 @@
     "@types/webpack": "^5.28.0",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
+    "axe-core": "^4.4.1",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
+    "cypress": "^9.5.3",
+    "cypress-axe": "^0.14.0",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-const-case": "^1.2.2",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.29.4",

@@ -12,7 +12,8 @@
       "prettier",
       "plugin:react-hooks/recommended",
       "plugin:jsx-a11y/strict",
-      "plugin:promise/recommended"
+      "plugin:promise/recommended",
+      "plugin:cypress/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -28,7 +29,8 @@
       "jsx-a11y",
       "promise",
       "const-case",
-      "react-hooks"
+      "react-hooks",
+      "cypress"
     ],
     "settings": {
       "react": {
