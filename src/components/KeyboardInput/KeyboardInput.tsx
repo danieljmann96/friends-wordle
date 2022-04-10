@@ -26,6 +26,7 @@ export default function KeyboardInput(): JSX.Element {
 
   return (
     <AppBar
+      component="footer"
       position="fixed"
       sx={{ top: 'auto', bottom: 0, alignItems: 'center' }}
     >

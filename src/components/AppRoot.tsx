@@ -23,9 +23,10 @@ export default function AppRoot(): JSX.Element {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <WordProvider>
-          <AppBar position="fixed" sx={{ my: 0 }}>
+          <AppBar position="fixed" role="banner" sx={{ my: 0 }}>
             <Toolbar>
               <IconButton
+                aria-label="settings"
                 color="inherit"
                 edge="start"
                 size="large"
@@ -33,10 +34,11 @@ export default function AppRoot(): JSX.Element {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography component="div" sx={{ flexGrow: 1 }} variant="h6">
+              <Typography component="h1" sx={{ flexGrow: 1 }} variant="h6">
                 Friends Wordle
               </Typography>
               <IconButton
+                aria-label="dark mode"
                 color="inherit"
                 onClick={handleChangeTheme}
                 size="large"
@@ -47,6 +49,7 @@ export default function AppRoot(): JSX.Element {
           </AppBar>
           <Paper
             elevation={0}
+            role="main"
             square
             sx={{
               width: '100%',
