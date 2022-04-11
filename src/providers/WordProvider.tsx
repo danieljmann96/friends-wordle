@@ -6,8 +6,11 @@ import React, {
   useEffect
 } from 'react';
 import { useSnackbar } from 'notistack';
-import { DEFAULT_WORD, alphabet, NUMBER_OF_GUESSES } from '../constants';
+import { alphabet, NUMBER_OF_GUESSES } from '../constants';
+import { characters } from '../constants/characters';
 import { ContextProviderProps, Letter, LetterStatus } from 'types';
+
+const wordToUse = characters[Math.floor(Math.random() * characters.length)];
 
 interface WordContextState {
   activeRow: Letter[];
@@ -19,7 +22,7 @@ interface WordContextState {
   word: string;
 }
 
-const emptyRow = Array<string>(DEFAULT_WORD.length)
+const emptyRow = Array<string>(wordToUse.length)
   .fill('')
   .map<Letter>(x => {
     return { display: x, status: 'unused' };
@@ -81,7 +84,7 @@ export default function WordProvider({
   const guessWord = useCallback(() => {
     const letters = activeRow.map(x => x.display);
     if (!letters.includes('')) {
-      const word = DEFAULT_WORD.split('');
+      const word = wordToUse.split('');
       const statuses: LetterStatus[] = Array(letters.length).fill('unused');
       //go through correct letters
       letters.forEach((letter, i) => {
@@ -102,14 +105,17 @@ export default function WordProvider({
         return { display: letter.display, status: statuses[i] };
       });
       const isFinished = usedRows.length === NUMBER_OF_GUESSES - 1;
-      const hasWon = letters.join('') === DEFAULT_WORD;
+      const hasWon = letters.join('') === wordToUse;
       if (isFinished || hasWon) {
         setHasFinished(true);
         setActiveRow(newRow);
         if (!hasWon) {
-          enqueueSnackbar("You didn't win! Better luck next time", {
-            variant: 'error'
-          });
+          enqueueSnackbar(
+            `You didn't win! Better luck next time. The word was ${wordToUse}`,
+            {
+              variant: 'error'
+            }
+          );
         } else {
           enqueueSnackbar(`You won in ${usedRows.length + 1} guesses!`, {
             variant: 'success'
@@ -141,7 +147,7 @@ export default function WordProvider({
 
   const contextValue: WordContextState = useMemo(() => {
     return {
-      word: DEFAULT_WORD,
+      word: wordToUse,
       activeRow,
       usedRows,
       inputLetter,
