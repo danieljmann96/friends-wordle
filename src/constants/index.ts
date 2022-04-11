@@ -1,6 +1,4 @@
-export const NUMBER_OF_GUESSES = 3;
-
-export const DEFAULT_WORD = 'PHOEBE';
+export const NUMBER_OF_GUESSES = 6;
 
 export const keyboardLayout = [
   'Q W E R T Y U I O P',
