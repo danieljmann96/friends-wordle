@@ -8,10 +8,12 @@ const devConfig = {
   mode: 'development',
   entry: './src/App.tsx',
   output: {
-    publicPath: 'http://localhost:4008/'
+    publicPath: 'auto'
   },
   devServer: {
     static: path.join(__dirname, 'public'),
+    host: '0.0.0.0',
+    allowedHosts: 'all',
     hot: true,
     port: 4008,
     historyApiFallback: true
