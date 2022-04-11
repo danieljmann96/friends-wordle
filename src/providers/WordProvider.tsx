@@ -1,4 +1,10 @@
-import React, { createContext, useMemo, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useMemo,
+  useState,
+  useCallback,
+  useEffect
+} from 'react';
 import { useSnackbar } from 'notistack';
 import { DEFAULT_WORD, alphabet, NUMBER_OF_GUESSES } from '../constants';
 import { ContextProviderProps, Letter, LetterStatus } from 'types';
@@ -115,6 +121,23 @@ export default function WordProvider({
       }
     }
   }, [activeRow, enqueueSnackbar, usedRows.length]);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      const input = e.key.toUpperCase();
+      if (alphabet.includes(input)) {
+        inputLetter(input);
+      } else if (input === 'BACKSPACE') {
+        removeLetter();
+      } else if (input === 'ENTER') {
+        guessWord();
+      }
+    }
+    if (!hasFinished) document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [guessWord, hasFinished, inputLetter, removeLetter]);
 
   const contextValue: WordContextState = useMemo(() => {
     return {
