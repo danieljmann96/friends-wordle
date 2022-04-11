@@ -11,6 +11,7 @@ import {
 import WordProvider from '../providers/WordProvider';
 import LetterGrid from './LetterGrid';
 import KeyboardInput from './KeyboardInput';
+import LeftPane from './LeftPane';
 import { GITHUB_REPO_LINK } from '../constants';
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
@@ -18,6 +19,7 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 export default function AppRoot(): JSX.Element {
   const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
   const handleChangeTheme = () => {
     setDarkMode(mode => !mode);
@@ -35,6 +37,7 @@ export default function AppRoot(): JSX.Element {
                 aria-label="settings"
                 color="inherit"
                 edge="start"
+                onClick={() => setOpenDrawer(true)}
                 size="large"
                 sx={{ mr: 2 }}
               >
@@ -77,6 +80,7 @@ export default function AppRoot(): JSX.Element {
             <LetterGrid />
           </Paper>
           <KeyboardInput />
+          <LeftPane open={openDrawer} setOpen={setOpenDrawer} />
         </WordProvider>
       </SnackbarProvider>
     </ThemeProvider>
