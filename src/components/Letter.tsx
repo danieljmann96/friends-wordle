@@ -4,9 +4,9 @@ import { isMobile } from 'react-device-detect';
 import { Letter as LetterType } from 'types';
 
 const themeConverter = {
-  unused: 'secondary.main',
-  wrongPlace: 'warning.main',
-  rightPlace: 'success.main'
+  unused: 'secondary.dark',
+  wrongPlace: 'warning.dark',
+  rightPlace: 'success.dark'
 };
 
 interface IProps {
