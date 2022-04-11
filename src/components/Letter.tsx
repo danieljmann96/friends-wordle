@@ -20,15 +20,15 @@ export default function Letter(props: IProps): JSX.Element {
       component="span"
       sx={{
         backgroundColor: themeConverter[letter.status],
-        height: isMobile ? 30 : 60,
-        width: isMobile ? 25 : 100,
+        height: 60,
+        width: isMobile ? 40 : 100,
         display: 'inline-block'
       }}
     >
       <Typography
         component="span"
         sx={{
-          fontSize: isMobile ? '1rem' : '2.5rem',
+          fontSize: '2.5rem',
           textAlign: 'center',
           color:
             letter.display === '' ? themeConverter[letter.status] : undefined

@@ -7,11 +7,11 @@ import React, {
 } from 'react';
 import { useSnackbar } from 'notistack';
 import { alphabet, NUMBER_OF_GUESSES } from '../constants';
-import { characters } from '../constants/characters';
+//import { characters } from '../constants/characters';
 import { ContextProviderProps, Letter, LetterStatus } from 'types';
 
 // eslint-disable-next-line
-const wordToUse = 'MRHECKLES'; //characters[Math.floor(Math.random() * characters.length)];
+const wordToUse = 'TAG'; //characters[Math.floor(Math.random() * characters.length)];
 
 interface WordContextState {
   activeRow: Letter[];
