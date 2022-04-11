@@ -36,3 +36,6 @@ export const alphabet = [
   'Y',
   'Z'
 ];
+
+export const GITHUB_REPO_LINK =
+  'https://github.com/danieljmann96/friends-wordle';

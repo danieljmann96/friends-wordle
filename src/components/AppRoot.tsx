@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AppBar, IconButton, Paper, Toolbar, Typography } from '@mui/material';
-import { Menu as MenuIcon, LightMode, DarkMode } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  LightMode,
+  DarkMode,
+  GitHub
+} from '@mui/icons-material';
 import WordProvider from '../providers/WordProvider';
 import LetterGrid from './LetterGrid';
 import KeyboardInput from './KeyboardInput';
+import { GITHUB_REPO_LINK } from '../constants';
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 const lightTheme = createTheme({ palette: { mode: 'light' } });
@@ -37,6 +43,15 @@ export default function AppRoot(): JSX.Element {
               <Typography component="h1" sx={{ flexGrow: 1 }} variant="h6">
                 Friends Wordle
               </Typography>
+              <IconButton
+                aria-label="github"
+                color="inherit"
+                href={GITHUB_REPO_LINK}
+                size="large"
+                target="_blank"
+              >
+                <GitHub />
+              </IconButton>
               <IconButton
                 aria-label="dark mode"
                 color="inherit"
