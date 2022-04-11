@@ -69,7 +69,9 @@ export default function AppRoot(): JSX.Element {
             sx={{
               width: '100%',
               height: '100vh',
-              py: 10
+              py: 10,
+              justifyContent: 'center',
+              display: 'flex'
             }}
           >
             <LetterGrid />

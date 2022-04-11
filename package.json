@@ -8,7 +8,9 @@
     "lint": "node_modules/.bin/eslint --cache --fix ./src",
     "build": "webpack --config config/webpack.prod.js",
     "cyopen": "cypress open",
-    "cyrun": "cypress run"
+    "cyrun": "cypress run",
+    "dockerbuild": "docker build -t friends-wordle .",
+    "dockerstart": "docker run --rm -it -p 4012:80 friends-wordle"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "@mui/material": "^5.5.3",
     "notistack": "^2.0.3",
     "react": "^17.0.2",
+    "react-device-detect": "^2.2.2",
     "react-dom": "^17.0.2",
     "react-simple-keyboard": "^3.4.94",
     "uniqid": "^5.4.0"

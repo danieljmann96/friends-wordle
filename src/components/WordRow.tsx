@@ -15,7 +15,7 @@ export default function WordRow({ word }: IProps): JSX.Element {
         <Grid
           item
           key={uniqid()}
-          sx={{ textAlign: 'center' }}
+          sx={{ textAlign: 'center', maxHeight: 100 }}
           xs={12 / word.length}
         >
           <Letter letter={letter} />
