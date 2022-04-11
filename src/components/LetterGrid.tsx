@@ -1,22 +1,23 @@
 import React, { useContext } from 'react';
 import uniqid from 'uniqid';
-import { Grid, useMediaQuery } from '@mui/material';
+import { Grid } from '@mui/material';
 import { WordContext } from '../providers/WordProvider';
 import WordRow from './WordRow';
 
 export default function LetterGrid(): JSX.Element {
-  const { usedRows, activeRow } = useContext(WordContext);
-  const matchesLarge = useMediaQuery('(min-width:1750px)');
-  const matchesMed = useMediaQuery('(max-width:1100px)');
-  const matchesSm = useMediaQuery('(max-width:800px)');
+  const { usedRows, activeRow, word } = useContext(WordContext);
+  // const matchesLarge = useMediaQuery('(min-width:1750px)');
+  // const matchesMed = useMediaQuery('(max-width:1100px)');
+  // const matchesSm = useMediaQuery('(max-width:800px)');
 
   return (
     <Grid
+      alignItems="flex-start"
       container
       justifyContent="center"
-      spacing={2}
       sx={{
-        px: matchesLarge ? '30%' : matchesSm ? 0 : matchesMed ? '10%' : '20%'
+        width: `${150 * word.length}px`,
+        height: `${(usedRows.length + 1) * 11}%`
       }}
     >
       {usedRows.map(row => (

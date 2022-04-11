@@ -10,7 +10,8 @@ import { alphabet, NUMBER_OF_GUESSES } from '../constants';
 import { characters } from '../constants/characters';
 import { ContextProviderProps, Letter, LetterStatus } from 'types';
 
-const wordToUse = characters[Math.floor(Math.random() * characters.length)];
+// eslint-disable-next-line
+const wordToUse = 'MRHECKLES'; //characters[Math.floor(Math.random() * characters.length)];
 
 interface WordContextState {
   activeRow: Letter[];

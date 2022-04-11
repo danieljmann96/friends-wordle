@@ -1,5 +1,6 @@
 import React from 'react';
 import { Paper, Typography } from '@mui/material';
+import { isMobile } from 'react-device-detect';
 import { Letter as LetterType } from 'types';
 
 const themeConverter = {
@@ -19,16 +20,21 @@ export default function Letter(props: IProps): JSX.Element {
       component="span"
       sx={{
         backgroundColor: themeConverter[letter.status],
-        height: 60,
-        width: 100,
+        height: isMobile ? 30 : 60,
+        width: isMobile ? 25 : 100,
         display: 'inline-block'
       }}
     >
       <Typography
         component="span"
-        sx={{ fontSize: '2.5rem', textAlign: 'center' }}
+        sx={{
+          fontSize: isMobile ? '1rem' : '2.5rem',
+          textAlign: 'center',
+          color:
+            letter.display === '' ? themeConverter[letter.status] : undefined
+        }}
       >
-        {letter.display}
+        {letter.display === '' ? '?' : letter.display}
       </Typography>
     </Paper>
   );
