@@ -20,6 +20,7 @@ interface WordContextState {
   removeLetter: () => void;
   usedRows: Letter[][];
   word: string;
+  wrongLetters: string; //"A B C D E F"
 }
 
 const emptyRow = Array<string>(wordToUse.length)
@@ -35,7 +36,8 @@ export const WordContext = createContext<WordContextState>({
   inputLetter: () => null,
   removeLetter: () => null,
   usedRows: [],
-  word: ''
+  word: '',
+  wrongLetters: ''
 });
 
 export default function WordProvider({
@@ -44,6 +46,7 @@ export default function WordProvider({
   const [activeRow, setActiveRow] = useState<Letter[]>(emptyRow);
   const [usedRows, setUsedRows] = useState<Letter[][]>([]);
   const [hasFinished, setHasFinished] = useState<boolean>(false);
+  const [wrongLetters, setWrongLetters] = useState<string>('');
   const { enqueueSnackbar } = useSnackbar();
 
   const inputLetter = useCallback(
@@ -81,6 +84,17 @@ export default function WordProvider({
     }
   }, [activeRow]);
 
+  const addToWrongLetters = useCallback(
+    (letters: string[]) => {
+      const existingArray = wrongLetters.split(' ');
+      const uniqueLettersString = [
+        ...new Set(letters.concat(existingArray))
+      ].join(' ');
+      setWrongLetters(uniqueLettersString);
+    },
+    [wrongLetters]
+  );
+
   const guessWord = useCallback(() => {
     const letters = activeRow.map(x => x.display);
     if (!letters.includes('')) {
@@ -104,6 +118,9 @@ export default function WordProvider({
       const newRow = activeRow.map<Letter>((letter, i) => {
         return { display: letter.display, status: statuses[i] };
       });
+      addToWrongLetters(
+        newRow.filter(x => x.status === 'unused').map(x => x.display)
+      );
       const isFinished = usedRows.length === NUMBER_OF_GUESSES - 1;
       const hasWon = letters.join('') === wordToUse;
       if (isFinished || hasWon) {
@@ -126,7 +143,7 @@ export default function WordProvider({
         setActiveRow(emptyRow);
       }
     }
-  }, [activeRow, enqueueSnackbar, usedRows.length]);
+  }, [activeRow, enqueueSnackbar, usedRows.length, addToWrongLetters]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -153,9 +170,18 @@ export default function WordProvider({
       inputLetter,
       removeLetter,
       guessWord,
-      hasFinished
+      hasFinished,
+      wrongLetters
     };
-  }, [activeRow, usedRows, inputLetter, removeLetter, guessWord, hasFinished]);
+  }, [
+    activeRow,
+    usedRows,
+    inputLetter,
+    removeLetter,
+    guessWord,
+    hasFinished,
+    wrongLetters
+  ]);
 
   return (
     <WordContext.Provider value={contextValue}>{children}</WordContext.Provider>

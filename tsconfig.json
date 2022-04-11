@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "downlevelIteration": true,
       "lib": ["es6", "dom"],
       "baseUrl": "src",
       "outDir": "./dist/",
