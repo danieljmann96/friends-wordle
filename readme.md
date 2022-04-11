@@ -39,5 +39,4 @@ Then start the service:
 
 ```
 docker run --rm -it -p 8080:80 friends-wordle
-
 ```
