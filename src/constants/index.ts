@@ -1,5 +1,3 @@
-import { ScoreKeys } from 'types';
-
 export const NUMBER_OF_GUESSES = 6;
 
 export const keyboardLayout = [
@@ -40,9 +38,9 @@ export const alphabet = [
 export const GITHUB_REPO_LINK =
   'https://github.com/danieljmann96/friends-wordle';
 
-export const scoreKeys: ScoreKeys[] = [
+export const scoreKeys = [
   'currentStreak',
   'highestStreak',
   'gamesWon',
   'totalPlayed'
-];
+] as const;
