@@ -14,3 +14,5 @@ export type ScoreKeys =
   | 'highestStreak'
   | 'gamesWon'
   | 'totalPlayed';
+
+export type AllScores = Map<ScoreKeys, string>;
