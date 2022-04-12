@@ -1,10 +1,16 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    DOCKER_TOKEN: DOCKER_PAT:DOCKER_PAT
+    DOCKER_USER: DOCKER_PAT:DOCKER_USER
+
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
   build:
     commands:
       - echo Build started on `date`
