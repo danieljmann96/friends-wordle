@@ -12,5 +12,5 @@ export type LetterStatus = 'unused' | 'wrongPlace' | 'rightPlace';
 export type ScoreKeys =
   | 'currentStreak'
   | 'highestStreak'
-  | 'winPercentage'
+  | 'gamesWon'
   | 'totalPlayed';

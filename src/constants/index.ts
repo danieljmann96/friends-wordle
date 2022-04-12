@@ -43,6 +43,6 @@ export const GITHUB_REPO_LINK =
 export const scoreKeys: ScoreKeys[] = [
   'currentStreak',
   'highestStreak',
-  'winPercentage',
+  'gamesWon',
   'totalPlayed'
 ];

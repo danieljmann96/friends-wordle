@@ -8,6 +8,7 @@ import React, {
 import { useSnackbar } from 'notistack';
 import { alphabet, NUMBER_OF_GUESSES } from '../constants';
 import { characters } from '../constants/characters';
+import { useLocalScore } from '../hooks';
 import { ContextProviderProps, Letter, LetterStatus } from 'types';
 
 const wordToUse = characters[Math.floor(Math.random() * characters.length)];
@@ -48,6 +49,16 @@ export default function WordProvider({
   const [hasFinished, setHasFinished] = useState<boolean>(false);
   const [wrongLetters, setWrongLetters] = useState<string>('');
   const { enqueueSnackbar } = useSnackbar();
+  const [totalPlayed, setTotalPlayed] = useLocalScore('totalPlayed');
+  const [gamesWon, setGamesWon] = useLocalScore('gamesWon');
+
+  const updateScores = useCallback(
+    (hasWon: boolean) => {
+      setTotalPlayed(String(Number(totalPlayed) + 1));
+      setGamesWon(String(Number(gamesWon) + (hasWon ? 1 : 0)));
+    },
+    [setTotalPlayed, totalPlayed, setGamesWon, gamesWon]
+  );
 
   const inputLetter = useCallback(
     (letter: string) => {
@@ -124,6 +135,7 @@ export default function WordProvider({
       const isFinished = usedRows.length === NUMBER_OF_GUESSES - 1;
       const hasWon = letters.join('') === wordToUse;
       if (isFinished || hasWon) {
+        updateScores(hasWon);
         setHasFinished(true);
         setActiveRow(newRow);
         if (!hasWon) {
@@ -143,7 +155,13 @@ export default function WordProvider({
         setActiveRow(emptyRow);
       }
     }
-  }, [activeRow, enqueueSnackbar, usedRows.length, addToWrongLetters]);
+  }, [
+    activeRow,
+    enqueueSnackbar,
+    usedRows.length,
+    addToWrongLetters,
+    updateScores
+  ]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
