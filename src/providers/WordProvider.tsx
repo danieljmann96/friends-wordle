@@ -51,13 +51,34 @@ export default function WordProvider({
   const { enqueueSnackbar } = useSnackbar();
   const [totalPlayed, setTotalPlayed] = useLocalScore('totalPlayed');
   const [gamesWon, setGamesWon] = useLocalScore('gamesWon');
+  const [currentStreak, setCurrentStreak] = useLocalScore('currentStreak');
+  const [highestStreak, setHighestStreak] = useLocalScore('highestStreak');
 
   const updateScores = useCallback(
     (hasWon: boolean) => {
       setTotalPlayed(String(Number(totalPlayed) + 1));
       setGamesWon(String(Number(gamesWon) + (hasWon ? 1 : 0)));
+      setHighestStreak(
+        hasWon
+          ? String(
+              Number(currentStreak) + 1 > Number(highestStreak)
+                ? Number(currentStreak) + 1
+                : highestStreak
+            )
+          : highestStreak
+      );
+      setCurrentStreak(hasWon ? String(Number(currentStreak) + 1) : '0');
     },
-    [setTotalPlayed, totalPlayed, setGamesWon, gamesWon]
+    [
+      setTotalPlayed,
+      totalPlayed,
+      setGamesWon,
+      gamesWon,
+      currentStreak,
+      highestStreak,
+      setCurrentStreak,
+      setHighestStreak
+    ]
   );
 
   const inputLetter = useCallback(
