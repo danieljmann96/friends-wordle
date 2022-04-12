@@ -22,6 +22,8 @@ interface WordContextState {
   usedRows: Letter[][];
   word: string;
   wrongLetters: string; //"A B C D E F"
+  wrongPlaceLetters: string; //"A B C D E F"
+  rightPlaceLetters: string; //"A B C D E F"
 }
 
 const emptyRow = Array<string>(wordToUse.length)
@@ -38,7 +40,9 @@ export const WordContext = createContext<WordContextState>({
   removeLetter: () => null,
   usedRows: [],
   word: '',
-  wrongLetters: ''
+  wrongLetters: '',
+  wrongPlaceLetters: '',
+  rightPlaceLetters: ''
 });
 
 export default function WordProvider({
@@ -48,6 +52,8 @@ export default function WordProvider({
   const [usedRows, setUsedRows] = useState<Letter[][]>([]);
   const [hasFinished, setHasFinished] = useState<boolean>(false);
   const [wrongLetters, setWrongLetters] = useState<string>('');
+  const [wrongPlaceLetters, setWrongPlaceLetters] = useState<string>('');
+  const [rightPlaceLetters, setRightPlaceLetters] = useState<string>('');
   const { enqueueSnackbar } = useSnackbar();
   const [totalPlayed, setTotalPlayed] = useLocalScore('totalPlayed');
   const [gamesWon, setGamesWon] = useLocalScore('gamesWon');
@@ -116,15 +122,33 @@ export default function WordProvider({
     }
   }, [activeRow]);
 
-  const addToWrongLetters = useCallback(
-    (letters: string[]) => {
-      const existingArray = wrongLetters.split(' ');
-      const uniqueLettersString = [
-        ...new Set(letters.concat(existingArray))
+  const addToLetters = useCallback(
+    (wrongs: string[], wrongPlaces: string[], rightPlaces: string[]) => {
+      const existingRights = rightPlaceLetters.split(' ');
+      const uniqueRightsString = [
+        ...new Set(rightPlaces.concat(existingRights))
       ].join(' ');
-      setWrongLetters(uniqueLettersString);
+      setRightPlaceLetters(uniqueRightsString);
+      const existingWrongPlaces = wrongPlaceLetters.split(' ');
+      const uniqueWrongPlacesString = [
+        ...new Set(
+          wrongPlaces
+            .filter(x => !rightPlaceLetters.includes(x))
+            .concat(existingWrongPlaces)
+        )
+      ].join(' ');
+      setWrongPlaceLetters(uniqueWrongPlacesString);
+      const existingWrongs = wrongLetters.split(' ');
+      const uniqueWrongsString = [
+        ...new Set(
+          wrongs
+            .filter(x => !wrongPlaceLetters.includes(x))
+            .concat(existingWrongs)
+        )
+      ].join(' ');
+      setWrongLetters(uniqueWrongsString);
     },
-    [wrongLetters]
+    [wrongLetters, rightPlaceLetters, wrongPlaceLetters]
   );
 
   const guessWord = useCallback(() => {
@@ -150,8 +174,10 @@ export default function WordProvider({
       const newRow = activeRow.map<Letter>((letter, i) => {
         return { display: letter.display, status: statuses[i] };
       });
-      addToWrongLetters(
-        newRow.filter(x => x.status === 'unused').map(x => x.display)
+      addToLetters(
+        newRow.filter(x => x.status === 'unused').map(x => x.display),
+        newRow.filter(x => x.status === 'wrongPlace').map(x => x.display),
+        newRow.filter(x => x.status === 'rightPlace').map(x => x.display)
       );
       const isFinished = usedRows.length === NUMBER_OF_GUESSES - 1;
       const hasWon = letters.join('') === wordToUse;
@@ -176,13 +202,7 @@ export default function WordProvider({
         setActiveRow(emptyRow);
       }
     }
-  }, [
-    activeRow,
-    enqueueSnackbar,
-    usedRows.length,
-    addToWrongLetters,
-    updateScores
-  ]);
+  }, [activeRow, enqueueSnackbar, usedRows.length, updateScores, addToLetters]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -210,7 +230,9 @@ export default function WordProvider({
       removeLetter,
       guessWord,
       hasFinished,
-      wrongLetters
+      wrongLetters,
+      wrongPlaceLetters,
+      rightPlaceLetters
     };
   }, [
     activeRow,
@@ -219,7 +241,9 @@ export default function WordProvider({
     removeLetter,
     guessWord,
     hasFinished,
-    wrongLetters
+    wrongLetters,
+    wrongPlaceLetters,
+    rightPlaceLetters
   ]);
 
   return (

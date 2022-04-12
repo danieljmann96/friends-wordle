@@ -3,8 +3,18 @@
     color: white !important;
 }
 
-.hg-button-wrong {
-    background: red !important;
+.hg-button.hg-wrong {
+    background: #d32f2f !important;
+    color: white !important;
+}
+
+.hg-button.hg-wrongp {
+    background: #f57c00 !important;
+    color: white !important;
+}
+
+.hg-button.hg-right {
+    background: #388e3c !important;
     color: white !important;
 }
 

@@ -7,8 +7,15 @@ import 'react-simple-keyboard/build/css/index.css';
 import './index.css';
 
 export default function KeyboardInput(): JSX.Element {
-  const { inputLetter, removeLetter, guessWord, hasFinished, wrongLetters } =
-    useContext(WordContext);
+  const {
+    inputLetter,
+    removeLetter,
+    guessWord,
+    hasFinished,
+    wrongLetters,
+    wrongPlaceLetters,
+    rightPlaceLetters
+  } = useContext(WordContext);
   const keyboardRef = useRef<KeyboardReactInterface | null>(null);
 
   const handleChange = (letter: string) => {
@@ -32,7 +39,17 @@ export default function KeyboardInput(): JSX.Element {
     >
       {hasFinished ? null : (
         <Keyboard
-          buttonTheme={[{ class: 'hg-button-wrong', buttons: wrongLetters }]}
+          buttonTheme={[
+            ...(wrongLetters.length > 0
+              ? [{ class: 'hg-wrong', buttons: wrongLetters }]
+              : []),
+            ...(wrongPlaceLetters.length > 0
+              ? [{ class: 'hg-wrongp', buttons: wrongPlaceLetters }] //to remove console warning for an empty string passed
+              : []),
+            ...(rightPlaceLetters.length > 0
+              ? [{ class: 'hg-right', buttons: rightPlaceLetters }]
+              : [])
+          ]}
           disableButtonHold
           keyboardRef={r => (keyboardRef.current = r)}
           layout={{ default: keyboardLayout, shift: keyboardLayout }}
