@@ -1,15 +1,7 @@
 import React, { SetStateAction, Dispatch } from 'react';
-import {
-  Drawer,
-  Box,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@mui/material';
-import _ from 'lodash';
-import StatIcon from './StatIcon';
-import { scoreKeys } from '../constants';
+import { Drawer, Box, List } from '@mui/material';
+import StatListItem from './StatListItem';
+import { useAllLocalScoreValues } from '../hooks';
 
 interface IProps {
   open: boolean;
@@ -17,21 +9,31 @@ interface IProps {
 }
 
 export default function LeftPane({ open, setOpen }: IProps): JSX.Element {
+  const allScores = useAllLocalScoreValues();
   return (
     <Drawer anchor="left" onClose={() => setOpen(false)} open={open}>
       <Box role="presentation" sx={{ width: 350 }}>
         <List>
-          {scoreKeys.map(scoreKey => (
-            <ListItem key={scoreKey}>
-              <ListItemText
-                primary={_.startCase(scoreKey)}
-                primaryTypographyProps={{ sx: { fontSize: '1.5rem' } }}
-              />
-              <ListItemIcon>
-                <StatIcon scoreKey={scoreKey} />
-              </ListItemIcon>
-            </ListItem>
+          {[...allScores].map(scoreRecord => (
+            <StatListItem
+              key={scoreRecord[0]}
+              score={scoreRecord[1]}
+              scoreKey={scoreRecord[0]}
+            />
           ))}
+          <StatListItem
+            score={
+              allScores.get('totalPlayed') === '0'
+                ? '0'
+                : `${Math.round(
+                    (Number(allScores.get('gamesWon')) /
+                      Number(allScores.get('totalPlayed'))) *
+                      100
+                  )}%`
+            }
+            scoreKey="Win Percentage"
+            shrinkIconText={allScores.get('totalPlayed') !== '0'}
+          />
         </List>
       </Box>
     </Drawer>
