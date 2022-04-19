@@ -2,6 +2,7 @@ import React, { SetStateAction, Dispatch } from 'react';
 import { Drawer, Box, List } from '@mui/material';
 import StatListItem from './StatListItem';
 import { useAllLocalScoreValues } from '../hooks';
+import ScoreBreakdownGraph from './ScoreBreakdownGraph';
 
 interface IProps {
   open: boolean;
@@ -34,6 +35,7 @@ export default function LeftPane({ open, setOpen }: IProps): JSX.Element {
             scoreKey="Win Percentage"
             shrinkIconText={allScores.get('totalPlayed') !== '0'}
           />
+          <ScoreBreakdownGraph />
         </List>
       </Box>
     </Drawer>
