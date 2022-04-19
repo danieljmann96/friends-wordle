@@ -8,8 +8,13 @@ import React, {
 import { useSnackbar } from 'notistack';
 import { alphabet, NUMBER_OF_GUESSES } from '../constants';
 import { characters } from '../constants/characters';
-import { useLocalScore } from '../hooks';
-import { ContextProviderProps, Letter, LetterStatus } from 'types';
+import { useLocalScore, useLocalScoreBreakdown } from '../hooks';
+import {
+  ContextProviderProps,
+  Letter,
+  LetterStatus,
+  ScoreBreakdownKeys
+} from 'types';
 
 const wordToUse = characters[Math.floor(Math.random() * characters.length)];
 
@@ -59,6 +64,7 @@ export default function WordProvider({
   const [gamesWon, setGamesWon] = useLocalScore('gamesWon');
   const [currentStreak, setCurrentStreak] = useLocalScore('currentStreak');
   const [highestStreak, setHighestStreak] = useLocalScore('highestStreak');
+  const [, setScoreBreakdown] = useLocalScoreBreakdown();
 
   const updateScores = useCallback(
     (hasWon: boolean) => {
@@ -74,6 +80,10 @@ export default function WordProvider({
           : highestStreak
       );
       setCurrentStreak(hasWon ? String(Number(currentStreak) + 1) : '0');
+      if (hasWon) {
+        const guesses = String(usedRows.length + 1) as ScoreBreakdownKeys;
+        setScoreBreakdown(guesses);
+      }
     },
     [
       setTotalPlayed,
@@ -83,7 +93,9 @@ export default function WordProvider({
       currentStreak,
       highestStreak,
       setCurrentStreak,
-      setHighestStreak
+      setHighestStreak,
+      setScoreBreakdown,
+      usedRows.length
     ]
   );
 
