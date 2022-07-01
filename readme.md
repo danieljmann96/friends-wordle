@@ -2,8 +2,8 @@
 
 # Friends Wordle
 
-Currently deployed on an AWS Elastic Container Service cluster using the included buildspec.yml
-https://friendswordle.co.uk/
+Currently deployed on Digital Ocean
+https://live.friendswordle.co.uk/
 
 ## Install
 
