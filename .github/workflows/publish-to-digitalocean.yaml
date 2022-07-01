@@ -20,4 +20,4 @@ jobs:
       - name: Push image to DO Container Registry
         run: docker push registry.digitalocean.com/taxibooker/friends-wordle:latest
       - name: Redeploy DO app
-        run: doctl apps create-deployment insertuuid --wait
+        run: doctl apps create-deployment 73a4f896-6a4c-43aa-a7cb-cc825efb6cbd --wait
